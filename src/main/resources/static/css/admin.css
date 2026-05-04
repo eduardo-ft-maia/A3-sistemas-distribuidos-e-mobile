@@ -99,6 +99,8 @@
     font-size: 14px;
     padding: 13px 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
 }
 
 .actions {
