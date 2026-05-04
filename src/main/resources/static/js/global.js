@@ -1,0 +1,1 @@
+// Utilizar esse JS caso tenha algum código que seja utilizado em praticamente todas as páginas do projeto
