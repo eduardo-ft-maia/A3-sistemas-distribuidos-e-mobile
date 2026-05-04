@@ -1,0 +1,57 @@
+<div id="trip-modal" class="modal-overlay" th:fragment="cadastrar">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3>Adicionar viagem</h3>
+                <p>Preencha as informações da nova viagem</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="fecharModal()">×</button>
+        </div>
+
+        <form class="modal-form" method="post" action="/admin/viagens">
+            <div class="form-group">
+                <label for="origem">Origem</label>
+                <select id="origem" name="origem" required>
+                    <option value="" selected disabled>Selecione a origem</option>
+                    <option value="1">São Paulo - SP</option>
+                    <option value="2">Curitiba - PR</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destino">Destino</label>
+                <select id="destino" name="destino" required>
+                    <option value="" selected disabled>Selecione o destino</option>
+                    <option value="1">Campinas - SP</option>
+                    <option value="2">Florianópolis - SC</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dataViagem">Data da viagem</label>
+                <input type="date" id="dataViagem" name="dataViagem" required>
+            </div>
+
+            <div class="form-group">
+                <label for="horario">Horário</label>
+                <input type="time" id="horario" name="horario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <input type="text" id="preco" name="preco" placeholder="R$ 35,00" required>
+            </div>
+
+            <div class="form-group">
+                <label for="poltrona">Poltronas</label>
+                <input type="number" id="poltrona" name="poltrona" placeholder="44" min="1" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" onclick="fecharModal()">Cancelar</button>
+                <button type="submit" class="btn">Salvar viagem</button>
+            </div>
+        </form>
+    </div>
+</div>

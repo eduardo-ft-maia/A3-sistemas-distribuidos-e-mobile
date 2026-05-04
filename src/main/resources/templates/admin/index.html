@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin</title>
+
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    </head>
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
+
+        <div class="admin-layout">
+            <div th:replace="~{fragments/admin-sidebar :: sidebar}"></div>
+
+            <main class="admin-content">
+                <h1>Painel administrativo</h1>
+                <p>Selecione uma opção no menu lateral.</p>
+            </main>
+        </div>
+    </body>
+</html>
