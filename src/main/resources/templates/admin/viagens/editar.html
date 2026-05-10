@@ -1,0 +1,113 @@
+<div id="editar-modal" class="modal-overlay" th:fragment="editar">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3>Editar viagem</h3>
+                <p>Atualize as informações da viagem</p>
+            </div>
+
+            <button
+                    type="button"
+                    class="modal-close"
+                    onclick="fecharModalEditar()">
+                ×
+            </button>
+        </div>
+
+        <form class="modal-form" method="post" th:action="@{/admin/viagens/editar}">
+
+            <input type="hidden" id="editar-id" name="id">
+
+            <div class="form-group">
+                <label for="editar-origem">Origem</label>
+
+                <select id="editar-origem" name="cidadeOrigemId" required>
+                    <option value="" disabled>
+                        Selecione a origem
+                    </option>
+
+                    <option
+                            th:each="cidade : ${cidades}"
+                            th:value="${cidade.id}"
+                            th:text="${cidade.nome + ' - ' + cidade.estado.uf}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-destino">Destino</label>
+
+                <select id="editar-destino" name="cidadeDestinoId" required>
+                    <option value="" disabled>
+                        Selecione o destino
+                    </option>
+
+                    <option
+                            th:each="cidade : ${cidades}"
+                            th:value="${cidade.id}"
+                            th:text="${cidade.nome + ' - ' + cidade.estado.uf}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-saida">Saída</label>
+
+                <input
+                        type="datetime-local"
+                        id="editar-saida"
+                        name="horarioSaida"
+                        required>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-chegada">Chegada</label>
+
+                <input
+                        type="datetime-local"
+                        id="editar-chegada"
+                        name="horarioChegada"
+                        required>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-preco">Preço</label>
+
+                <input
+                        type="number"
+                        id="editar-preco"
+                        name="valorPassagem"
+                        placeholder="R$ 0.00"
+                        min="0"
+                        step="0.01"
+                        required>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-distancia">Distância</label>
+
+                <input
+                        type="number"
+                        id="editar-distancia"
+                        name="distanciaKm"
+                        placeholder="0.00 KM"
+                        min="0"
+                        step="0.01"
+                        required>
+            </div>
+
+            <div class="modal-actions">
+                <button
+                        type="button"
+                        class="btn secondary"
+                        onclick="fecharModalEditar()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn">
+                    Salvar alterações
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

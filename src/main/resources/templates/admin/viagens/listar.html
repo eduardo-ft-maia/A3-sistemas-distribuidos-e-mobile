@@ -7,7 +7,6 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/menu.css}">
         <link rel="stylesheet" th:href="@{/css/admin.css}">
-        <link rel="stylesheet" th:href="@{/css/viagens.css}">
     </head>
 
     <body>
@@ -20,50 +19,63 @@
                 <div class="top-bar">
                     <h2>Viagens cadastradas</h2>
 
-                    <button type="button" class="btn" onclick="abrirModal()">
+                    <button type="button" class="btn" onclick="abrirModalCadastrar()">
                         + Adicionar viagem
                     </button>
                 </div>
 
-                <div class="grid-wrapper">
-                    <div class="grid">
-                        <div class="grid-header">Origem</div>
-                        <div class="grid-header">Destino</div>
-                        <div class="grid-header">Data da viagem</div>
-                        <div class="grid-header">Horário</div>
-                        <div class="grid-header">Preço</div>
-                        <div class="grid-header">Poltrona</div>
-                        <div class="grid-header">Ações</div>
+                <div class="grid">
+                    <div class="grid-header">Origem</div>
+                    <div class="grid-header">Destino</div>
+                    <div class="grid-header">Saída</div>
+                    <div class="grid-header">Chegada</div>
+                    <div class="grid-header">Preço</div>
+                    <div class="grid-header">Distância</div>
+                    <div class="grid-header">Criado em</div>
+                    <div class="grid-header">Ações</div>
 
-                        <div>São Paulo - SP</div>
-                        <div>Campinas - SP</div>
-                        <div>20/05/2025</div>
-                        <div>07:00</div>
-                        <div>R$ 35,00</div>
-                        <div>44</div>
-                        <div class="actions">
-                            <button class="btn small">Editar</button>
-                            <button class="btn small danger">Deletar</button>
-                        </div>
+                    <th:block th:each="viagem : ${viagens}">
+                        <div th:text="${viagem.cidadeOrigem.nome}"></div>
+                        <div th:text="${viagem.cidadeDestino.nome}"></div>
+                        <div th:text="${#temporals.format(viagem.horarioSaida, 'dd/MM/yyyy - HH:mm')}"></div>
+                        <div th:text="${#temporals.format(viagem.horarioChegada, 'dd/MM/yyyy - HH:mm')}"></div>
+                        <div th:text="${'R$ ' + #numbers.formatDecimal(viagem.valorPassagem, 1, 2, 'COMMA')}"></div>
+                        <div th:text="${viagem.distanciaKm + ' km'}"></div>
+                        <div th:text="${#temporals.format(viagem.criadoEm, 'dd/MM/yyyy - HH:mm')}"></div>
 
-                        <div>São Paulo - SP</div>
-                        <div>Campinas - SP</div>
-                        <div>20/05/2025</div>
-                        <div>07:00</div>
-                        <div>R$ 35,00</div>
-                        <div>44</div>
                         <div class="actions">
-                            <button class="btn small">Editar</button>
-                            <button class="btn small danger">Deletar</button>
+                            <button
+                                    type="button"
+                                    class="btn small"
+                                    th:attr="
+                                        data-id=${viagem.id},
+                                        data-origem=${viagem.cidadeOrigem.id},
+                                        data-destino=${viagem.cidadeDestino.id},
+                                        data-saida=${viagem.horarioSaida},
+                                        data-chegada=${viagem.horarioChegada},
+                                        data-preco=${viagem.valorPassagem},
+                                        data-distancia=${viagem.distanciaKm}"
+                                    onclick="abrirModalEditar(this)">
+                                Editar
+                            </button>
+
+                            <form class="form-deletar" th:action="@{/admin/viagens/deletar/{id}(id=${viagem.id})}" method="post">
+                                <button type="submit" class="btn small danger">
+                                    Deletar
+                                </button>
+                            </form>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
 
             </main>
         </div>
 
         <div th:replace="~{admin/viagens/cadastrar :: cadastrar}"></div>
+        <div th:replace="~{admin/viagens/editar :: editar}"></div>
 
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script th:src="@{/js/admin/viagens.js}"></script>
     </body>
 </html>
