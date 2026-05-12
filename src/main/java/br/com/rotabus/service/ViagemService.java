@@ -78,4 +78,8 @@ public class ViagemService {
     public void deletar(Long id) {
         viagemRepository.deleteById(id);
     }
+    public List<Viagem> buscar(String origem, String destino) {
+        return viagemRepository
+                .findByCidadeOrigemNomeAndCidadeDestinoNome(origem, destino);
+    }
 }
