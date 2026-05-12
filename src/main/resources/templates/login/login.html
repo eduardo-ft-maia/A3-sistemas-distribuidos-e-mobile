@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Rotabus</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/menu :: menu}"></div>
+
+    <main class="login-page">
+
+        <div class="login-card">
+
+            <div class="login-header">
+                <h1>Login</h1>
+                <p>Acesse sua conta para continuar</p>
+            </div>
+
+            <form
+                th:action="@{/login}"
+                method="post"
+                class="login-form"
+            >
+
+                <div class="form-group">
+                    <label>Usuário</label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Digite seu usuário"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Senha</label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Digite sua senha"
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+                    Entrar
+                </button>
+
+            </form>
+
+            <div class="login-divider"></div>
+
+            <div class="login-footer">
+                Não possui uma conta? Entre em contato com o administrador.
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

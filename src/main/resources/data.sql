@@ -105,3 +105,17 @@ INSERT INTO viagem (cidade_origem_id, cidade_destino_id, horario_saida, horario_
         806.0,
         CURRENT_TIMESTAMP
     );
+
+
+-- Adicionar Usuários
+    INSERT INTO usuario (username, password, role) VALUES
+    (
+        'admin',
+        '{noop}123',
+        'ADMIN'
+    ),
+    (
+        'usuario',
+        '{noop}123',
+        'USER'
+    );
