@@ -42,4 +42,16 @@ public class Usuario {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = true)
+    private Empresa empresa;
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 }

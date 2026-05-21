@@ -5,6 +5,7 @@ import br.com.rotabus.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -43,5 +44,22 @@ public class CustomUserDetailsService
                         )
                 )
                 .build();
+    }
+
+    public Usuario usuarioLogado() {
+        String username = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return usuarioRepository
+                .findByUsername(username)
+                .orElseThrow();
+    }
+
+    public boolean usuarioLogadoEhAdmin() {
+        return usuarioLogado()
+                .getRole()
+                .equals("ADMIN");
     }
 }

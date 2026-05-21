@@ -42,6 +42,10 @@ public class Viagem {
     @Column(nullable = false)
     private LocalDateTime criadoEm;
 
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa;
+
     public Cidade getCidadeOrigem() {
         return cidadeOrigem;
     }
@@ -96,5 +100,13 @@ public class Viagem {
 
     public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

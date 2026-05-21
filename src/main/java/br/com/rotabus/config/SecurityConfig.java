@@ -22,11 +22,12 @@ public class SecurityConfig {
                     "/",
                     "/login",
                     "/css/**",
-                    "/js/**"
+                    "/js/**",
+                    "/h2-console/**"
                 ).permitAll()
 
                 .requestMatchers("/admin/**")
-                .hasRole("ADMIN")
+                .hasAnyRole("ADMIN", "EMPRESA")
 
                 .anyRequest()
                 .permitAll()
@@ -41,6 +42,14 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .logoutSuccessUrl("/")
                 .permitAll()
+            )
+
+            .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/h2-console/**")
+            )
+
+            .headers(headers -> headers
+                    .frameOptions(frame -> frame.sameOrigin())
             )
 
             .exceptionHandling(exception -> exception
