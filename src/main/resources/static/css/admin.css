@@ -225,3 +225,9 @@
     border: 1px solid #9aa8b8;
     color: #9aa8b8;
 }
+
+.admin-warning {
+    margin-top: 15px;
+    color: #ff384f;
+    font-size: 14px;
+}

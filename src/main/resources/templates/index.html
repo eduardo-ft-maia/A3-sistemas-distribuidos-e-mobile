@@ -1,96 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/index.css}">
+    </head>
 
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
 
-    <style>
-        .container {
-            padding: 60px;
-            color: white;
-        }
+        <section class="hero">
+            <div class="hero-content">
+                <h1>
+                    ENCONTRE SUA <span>PASSAGEM</span> DE ÔNIBUS<br>
+                    FÁCIL E RAPIDAMENTE
+                </h1>
 
-        .card-busca {
-            background-color: #0d1b2a;
-            padding: 30px;
-            border-radius: 12px;
-            width: 400px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
+                <p>Consulte horários, destinos e tarifas de forma simples.</p>
 
-        .card-busca h1 {
-            margin-bottom: 25px;
-        }
+                <form class="busca-form" action="/viagens/buscar" method="get">
+                    <div class="campo">
+                        <label>Origem</label>
+                        <input type="text" name="origem" placeholder="Onde você está?" required>
+                    </div>
 
-        .campo {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
+                    <div class="campo">
+                        <label>Destino</label>
+                        <input type="text" name="destino" placeholder="Para onde você vai?" required>
+                    </div>
 
-        .campo label {
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
+                    <div class="campo">
+                        <label>Data da viagem</label>
+                        <input type="date" name="data" required>
+                    </div>
 
-        .campo input {
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            font-size: 15px;
-        }
+                    <div class="campo">
+                        <label>A partir das</label>
+                        <input type="time" name="horario" required>
+                    </div>
 
-        .btn-buscar {
-            width: 100%;
-            padding: 12px;
-            background-color: #2563eb;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn-buscar:hover {
-            background-color: #1d4ed8;
-        }
-    </style>
-</head>
-
-<body>
-
-<div th:replace="~{fragments/menu :: menu}"></div>
-
-<div class="container">
-
-    <div class="card-busca">
-
-        <h1>Buscar viagens</h1>
-
-        <form action="/viagens/buscar" method="get">
-
-            <div class="campo">
-                <label>Origem</label>
-                <input type="text" name="origem" placeholder="Digite a origem">
+                    <button type="submit">
+                        Buscar passagens
+                    </button>
+                </form>
             </div>
-
-            <div class="campo">
-                <label>Destino</label>
-                <input type="text" name="destino" placeholder="Digite o destino">
-            </div>
-
-            <button type="submit" class="btn-buscar">
-                Buscar viagens
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-
-</body>
+        </section>
+    </body>
 </html>

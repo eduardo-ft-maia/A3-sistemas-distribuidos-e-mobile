@@ -17,9 +17,15 @@
 
             <main class="admin-content">
                 <div class="top-bar">
-                    <h2>Viagens cadastradas</h2>
+                    <div>
+                        <h2>Viagens cadastradas</h2>
 
-                    <button type="button" class="btn" onclick="abrirModalCadastrar()">
+                        <p th:if="${adminGeral}" class="admin-warning">
+                            Você está logado como administrador geral. Por isso, não pode cadastrar viagens e as viagens exibidas são as viagens cadastradas por todas as empresas. Para cadastrar, faça login com um usuário de empresa.
+                        </p>
+                    </div>
+
+                    <button th:if="${!adminGeral}" type="button" class="btn" onclick="abrirModalCadastrar()">
                         + Adicionar viagem
                     </button>
                 </div>
@@ -32,39 +38,49 @@
                     <div class="grid-header">Preço</div>
                     <div class="grid-header">Distância</div>
                     <div class="grid-header">Criado em</div>
-                    <div class="grid-header">Ações</div>
+                    <div class="grid-header" th:text="${adminGeral} ? 'Empresa' : 'Ações'"></div>
 
-                    <th:block th:each="viagem : ${viagens}">
-                        <div th:text="${viagem.cidadeOrigem.nome}"></div>
-                        <div th:text="${viagem.cidadeDestino.nome}"></div>
-                        <div th:text="${#temporals.format(viagem.horarioSaida, 'dd/MM/yyyy - HH:mm')}"></div>
-                        <div th:text="${#temporals.format(viagem.horarioChegada, 'dd/MM/yyyy - HH:mm')}"></div>
-                        <div th:text="${'R$ ' + #numbers.formatDecimal(viagem.valorPassagem, 1, 2, 'COMMA')}"></div>
-                        <div th:text="${viagem.distanciaKm + ' km'}"></div>
-                        <div th:text="${#temporals.format(viagem.criadoEm, 'dd/MM/yyyy - HH:mm')}"></div>
-
-                        <div class="actions">
-                            <button
-                                    type="button"
-                                    class="btn small"
-                                    th:attr="
-                                        data-id=${viagem.id},
-                                        data-origem=${viagem.cidadeOrigem.id},
-                                        data-destino=${viagem.cidadeDestino.id},
-                                        data-saida=${viagem.horarioSaida},
-                                        data-chegada=${viagem.horarioChegada},
-                                        data-preco=${viagem.valorPassagem},
-                                        data-distancia=${viagem.distanciaKm}"
-                                    onclick="abrirModalEditar(this)">
-                                Editar
-                            </button>
-
-                            <form class="form-deletar" th:action="@{/admin/viagens/deletar/{id}(id=${viagem.id})}" method="post">
-                                <button type="submit" class="btn small danger">
-                                    Deletar
-                                </button>
-                            </form>
+                    <th:block th:if="${#lists.isEmpty(viagens)}">
+                        <div class="empty-grid">
+                            Nenhuma viagem encontrada
                         </div>
+                    </th:block>
+
+                    <th:block th:unless="${#lists.isEmpty(viagens)}">
+                        <th:block th:each="viagem : ${viagens}">
+                            <div th:text="${viagem.cidadeOrigem.nome}"></div>
+                            <div th:text="${viagem.cidadeDestino.nome}"></div>
+                            <div th:text="${#temporals.format(viagem.horarioSaida, 'dd/MM/yyyy - HH:mm')}"></div>
+                            <div th:text="${#temporals.format(viagem.horarioChegada, 'dd/MM/yyyy - HH:mm')}"></div>
+                            <div th:text="${'R$ ' + #numbers.formatDecimal(viagem.valorPassagem, 1, 2, 'COMMA')}"></div>
+                            <div th:text="${viagem.distanciaKm + ' km'}"></div>
+                            <div th:text="${#temporals.format(viagem.criadoEm, 'dd/MM/yyyy - HH:mm')}"></div>
+
+                            <div th:if="${adminGeral}" th:text="${viagem.empresa.razaoSocial}"></div>
+
+                            <div th:unless="${adminGeral}" class="actions">
+                                <button
+                                        type="button"
+                                        class="btn small"
+                                        th:attr="
+                                            data-id=${viagem.id},
+                                            data-origem=${viagem.cidadeOrigem.id},
+                                            data-destino=${viagem.cidadeDestino.id},
+                                            data-saida=${viagem.horarioSaida},
+                                            data-chegada=${viagem.horarioChegada},
+                                            data-preco=${viagem.valorPassagem},
+                                            data-distancia=${viagem.distanciaKm}"
+                                        onclick="abrirModalEditar(this)">
+                                    Editar
+                                </button>
+
+                                <form class="form-deletar" th:action="@{/admin/viagens/deletar/{id}(id=${viagem.id})}" method="post">
+                                    <button type="submit" class="btn small danger">
+                                        Deletar
+                                    </button>
+                                </form>
+                            </div>
+                        </th:block>
                     </th:block>
                 </div>
 

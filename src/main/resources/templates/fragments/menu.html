@@ -1,5 +1,5 @@
 <!-- templates/fragments/menu.html -->
-<header class="navbar" th:fragment="menu">
+<header class="navbar" th:fragment="menu" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="nav-left">
         <a href="/" class="logo">RotaBus</a>
 
@@ -10,7 +10,16 @@
     </div>
 
     <div class="nav-right">
-        <a href="/login" class="login-btn">Login</a>
-        <a href="/admin" class="login-btn">Admin</a>
+        <a href="/login" class="login-btn" sec:authorize="isAnonymous()">Entrar</a>
+        <a href="/admin" class="login-btn" sec:authorize="hasRole('ADMIN')">Painel administrativo</a>
+        <form
+                th:action="@{/logout}"
+                method="post"
+                sec:authorize="isAuthenticated()"
+        >
+            <button type="submit" class="login-btn logout-btn">
+                Sair
+            </button>
+        </form>
     </div>
 </header>
