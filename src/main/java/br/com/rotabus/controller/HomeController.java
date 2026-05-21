@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Controller
 public class HomeController {
 
@@ -24,12 +27,14 @@ public class HomeController {
     public String buscar(
             @RequestParam String origem,
             @RequestParam String destino,
+            @RequestParam LocalDate data,
+            @RequestParam LocalTime horario,
             Model model
     ) {
 
         model.addAttribute(
                 "viagens",
-                viagemService.buscar(origem, destino)
+                viagemService.buscar(origem, destino, data, horario)
         );
 
         return "resultado-busca";

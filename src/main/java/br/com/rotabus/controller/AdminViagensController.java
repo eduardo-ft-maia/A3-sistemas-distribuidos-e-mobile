@@ -1,6 +1,7 @@
 package br.com.rotabus.controller;
 
 import br.com.rotabus.service.CidadeService;
+import br.com.rotabus.service.CustomUserDetailsService;
 import br.com.rotabus.service.ViagemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +16,17 @@ public class AdminViagensController {
 
     private final ViagemService viagemService;
     private final CidadeService cidadeService;
+    private final CustomUserDetailsService usuarioService;
 
     public AdminViagensController(
             ViagemService viagemService,
-            CidadeService cidadeService
+            CidadeService cidadeService,
+            CustomUserDetailsService usuarioService
     )
     {
         this.viagemService = viagemService;
         this.cidadeService = cidadeService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
@@ -30,6 +34,10 @@ public class AdminViagensController {
         model.addAttribute("viagens", viagemService.listarViagensEmpresa());
 
         model.addAttribute("cidades", cidadeService.listar());
+
+        model.addAttribute("paginaAtiva", "viagens");
+
+        model.addAttribute("adminGeral", usuarioService.usuarioLogadoEhAdmin());
 
         return "admin/viagens/listar";
     }

@@ -1,62 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Resultado da Busca</title>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Resultado da Busca</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/resultado-busca.css}">
+    </head>
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
 
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <div class="container">
+            <h1>Resultado da busca</h1>
 
-    <style>
-        .container {
-            padding: 40px;
-            color: white;
-        }
+            <div class="resultado-card" th:each="viagem : ${viagens}">
+                <div class="empresa">
+                    <div class="logo-empresa">R</div>
 
-        .card {
-            background-color: #0d1b2a;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
+                    <div>
+                        <strong th:text="${viagem.empresa.razaoSocial}"></strong>
+                    </div>
+                </div>
 
-        h1 {
-            margin-bottom: 30px;
-        }
-    </style>
-</head>
+                <div class="info">
+                    <strong th:text="${#temporals.format(viagem.horarioSaida, 'HH:mm')}"></strong>
+                    <span th:text="${viagem.cidadeOrigem.nome + ' - ' + viagem.cidadeOrigem.estado.uf}"></span>
+                </div>
 
-<body>
+                <div class="trajeto">
+                    <span th:text="${#temporals.format(viagem.horarioSaida, 'HH:mm') + ' - ' + #temporals.format(viagem.horarioChegada, 'HH:mm')}"></span>
+                    <div></div>
+                    <small>Direto</small>
+                </div>
 
-<div th:replace="~{fragments/menu :: menu}"></div>
+                <div class="info">
+                    <strong th:text="${#temporals.format(viagem.horarioChegada, 'HH:mm')}"></strong>
+                    <span th:text="${viagem.cidadeDestino.nome + ' - ' + viagem.cidadeDestino.estado.uf}"></span>
+                </div>
 
-<div class="container">
-
-    <h1>Resultado da busca</h1>
-
-    <div class="card" th:each="viagem : ${viagens}">
-
-        <h2>
-            <span th:text="${viagem.cidadeOrigem.nome}"></span>
-            →
-            <span th:text="${viagem.cidadeDestino.nome}"></span>
-        </h2>
-
-        <p>
-            Valor:
-            R$
-            <span th:text="${viagem.valorPassagem}"></span>
-        </p>
-
-        <p>
-            Distância:
-            <span th:text="${viagem.distanciaKm}"></span> km
-        </p>
-
-    </div>
-
-</div>
-
-</body>
+                <div class="preco">
+                    <strong th:text="${'R$ ' + viagem.valorPassagem}"></strong>
+                    <span>por pessoa</span>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
