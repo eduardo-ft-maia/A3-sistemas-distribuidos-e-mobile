@@ -1,4 +1,4 @@
-<aside class="sidebar" th:fragment="sidebar">
+<aside class="sidebar" th:fragment="sidebar" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="sidebar-menu">
         <a href="/admin" class="sidebar-link" th:classappend="${paginaAtiva == 'dashboard'} ? ' active'">
             Dashboard
@@ -6,6 +6,10 @@
 
         <a href="/admin/viagens" class="sidebar-link" th:classappend="${paginaAtiva == 'viagens'} ? ' active'">
             Viagens
+        </a>
+
+        <a sec:authorize="hasRole('ADMIN')" href="/admin/empresas" class="sidebar-link" th:classappend="${paginaAtiva == 'empresas'} ? ' active'">
+            Empresas
         </a>
     </nav>
 </aside>

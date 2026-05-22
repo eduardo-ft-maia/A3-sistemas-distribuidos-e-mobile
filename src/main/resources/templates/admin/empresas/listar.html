@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Empresas - Admin</title>
+
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    </head>
+
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
+
+        <div class="admin-layout">
+            <div th:replace="~{fragments/admin-sidebar :: sidebar}"></div>
+
+            <main class="admin-content">
+                <div class="top-bar">
+                    <div>
+                        <h2>Empresas cadastradas</h2>
+                    </div>
+
+                    <button type="button" class="btn" onclick="abrirModalCadastrar()">
+                        + Adicionar empresa
+                    </button>
+                </div>
+
+                <div class="grid empresa">
+                    <div class="grid-header">Razão social</div>
+                    <div class="grid-header">Nome fantasia</div>
+                    <div class="grid-header">CNPJ</div>
+                    <div class="grid-header">Telefone</div>
+                    <div class="grid-header">E-mail</div>
+                    <div class="grid-header">Criado em</div>
+                    <div class="grid-header">Ações</div>
+
+                    <th:block th:if="${empresas.empty}">
+                        <div class="empty-grid">
+                            Nenhuma empresa encontrada
+                        </div>
+                    </th:block>
+
+                    <th:block th:unless="${empresas.empty}">
+                        <th:block th:each="empresa : ${empresas.content}">
+                            <div th:text="${empresa.razaoSocial}"></div>
+                            <div th:text="${empresa.nomeFantasia}"></div>
+                            <div th:text="${empresa.cnpj}"></div>
+                            <div th:text="${empresa.telefone}"></div>
+                            <div th:text="${empresa.email}"></div>
+                            <div th:text="${#temporals.format(empresa.criadoEm, 'dd/MM/yyyy - HH:mm')}"></div>
+
+                            <div class="actions">
+                                <button
+                                        type="button"
+                                        class="btn small"
+                                        th:attr="
+                                            data-id=${empresa.id},
+                                            data-razao-social=${empresa.razaoSocial},
+                                            data-nome-fantasia=${empresa.nomeFantasia},
+                                            data-cnpj=${empresa.cnpj},
+                                            data-telefone=${empresa.telefone},
+                                            data-email=${empresa.email}"
+                                        onclick="abrirModalEditar(this)">
+                                    Editar
+                                </button>
+
+                                <form class="form-deletar" th:action="@{/admin/empresas/deletar/{id}(id=${empresa.id})}" method="post">
+                                    <button type="submit" class="btn small danger">
+                                        Deletar
+                                    </button>
+                                </form>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="pagination" th:if="${empresas.totalPages > 1}">
+                    <a th:if="${empresas.hasPrevious()}" th:href="@{/admin/empresas(page=${empresas.number - 1})}">
+                        Anterior
+                    </a>
+
+                    <span th:text="${empresas.number + 1} + ' / ' + ${empresas.totalPages}"></span>
+
+                    <a th:if="${empresas.hasNext()}" th:href="@{/admin/empresas(page=${empresas.number + 1})}">
+                        Próxima
+                    </a>
+                </div>
+            </main>
+        </div>
+
+        <div th:replace="~{admin/empresas/cadastrar :: cadastrar}"></div>
+        <div th:replace="~{admin/empresas/editar :: editar}"></div>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script th:src="@{/js/admin/empresas.js}"></script>
+    </body>
+</html>

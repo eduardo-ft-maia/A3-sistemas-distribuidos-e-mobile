@@ -1,0 +1,46 @@
+<div id="editar-modal" class="modal-overlay" th:fragment="editar">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3>Editar empresa</h3>
+                <p>Atualize as informações da empresa</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="fecharModalEditar()">×</button>
+        </div>
+
+        <form class="modal-form" method="post" th:action="@{/admin/empresas/editar}">
+            <input type="hidden" id="editar-id" name="id">
+
+            <div class="form-group">
+                <label for="editar-razao-social">Razão social</label>
+                <input type="text" id="editar-razao-social" name="razaoSocial" maxlength="200" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-nome-fantasia">Nome fantasia</label>
+                <input type="text" id="editar-nome-fantasia" name="nomeFantasia" maxlength="150">
+            </div>
+
+            <div class="form-group">
+                <label for="editar-cnpj">CNPJ</label>
+                <input type="text" id="editar-cnpj" name="cnpj" maxlength="20" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-telefone">Telefone</label>
+                <input type="text" id="editar-telefone" name="telefone" maxlength="20">
+            </div>
+
+            <div class="form-group">
+                <label for="editar-email">E-mail</label>
+                <input type="email" id="editar-email" name="email" maxlength="150">
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" onclick="fecharModalEditar()">Cancelar</button>
+                <button type="submit" class="btn">Salvar alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
