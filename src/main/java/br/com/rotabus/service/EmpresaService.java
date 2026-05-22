@@ -21,6 +21,10 @@ public class EmpresaService {
         return empresaRepository.findAll(pageable);
     }
 
+    public List<Empresa> listarTodas() {
+        return empresaRepository.findAll();
+    }
+
     public void cadastrar(Empresa empresa) {
         empresaRepository.save(empresa);
     }

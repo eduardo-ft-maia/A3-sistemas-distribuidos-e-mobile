@@ -11,5 +11,9 @@
         <a sec:authorize="hasRole('ADMIN')" href="/admin/empresas" class="sidebar-link" th:classappend="${paginaAtiva == 'empresas'} ? ' active'">
             Empresas
         </a>
+
+        <a sec:authorize="hasRole('ADMIN')" href="/admin/usuarios" class="sidebar-link" th:classappend="${paginaAtiva == 'usuarios'} ? ' active'">
+            Usúarios
+        </a>
     </nav>
 </aside>

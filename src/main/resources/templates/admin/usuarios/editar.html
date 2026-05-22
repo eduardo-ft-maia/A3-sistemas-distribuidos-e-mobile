@@ -1,0 +1,61 @@
+<div id="editar-modal" class="modal-overlay" th:fragment="editar">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h3>Editar usuário</h3>
+                <p>Atualize as informações do usuário</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="fecharModalEditar()">×</button>
+        </div>
+
+        <form class="modal-form" method="post" th:action="@{/admin/usuarios/editar}">
+            <input type="hidden" id="editar-id" name="id">
+
+            <div class="form-group">
+                <label for="editar-username">Usuário</label>
+                <input type="text" id="editar-username" name="username" maxlength="100" required autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+                <label for="editar-password">Senha</label>
+                <input type="password" id="editar-password" name="password" maxlength="100" placeholder="Deixe vazio para manter a senha atual" autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+                <label for="editar-role">Tipo</label>
+
+                <select id="editar-role" name="role" required>
+                    <option value="" selected disabled>
+                        Selecione um tipo
+                    </option>
+
+                    <option value="ADMIN">Administrador</option>
+                    <option value="EMPRESA">Empresa</option>
+                    <option value="USER">Usuário</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editar-empresa-id">Empresa</label>
+
+                <select id="editar-empresa-id" name="empresaId">
+                    <option value="" selected>
+                        Selecione uma empresa
+                    </option>
+
+                    <option
+                            th:each="empresa : ${empresas}"
+                            th:value="${empresa.id}"
+                            th:text="${empresa.razaoSocial}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" onclick="fecharModalEditar()">Cancelar</button>
+                <button type="submit" class="btn">Salvar alterações</button>
+            </div>
+        </form>
+    </div>
+</div>

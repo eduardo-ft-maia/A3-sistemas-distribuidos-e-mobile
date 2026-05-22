@@ -1,5 +1,6 @@
 package br.com.rotabus.model;
 
+import br.com.rotabus.enums.TipoUsuario;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +14,8 @@ public class Usuario {
 
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario role;
 
     public Long getId() {
         return id;
@@ -35,11 +37,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRole() {
+    public TipoUsuario getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(TipoUsuario role) {
         this.role = role;
     }
 

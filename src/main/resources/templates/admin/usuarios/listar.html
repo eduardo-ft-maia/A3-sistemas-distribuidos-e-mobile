@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Usuários - Admin</title>
+
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    </head>
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
+
+        <div class="admin-layout">
+            <div th:replace="~{fragments/admin-sidebar :: sidebar}"></div>
+
+            <main class="admin-content">
+                <div class="top-bar">
+                    <div>
+                        <h2>Usuários cadastrados</h2>
+                    </div>
+
+                    <button type="button" class="btn" onclick="abrirModalCadastrar()">
+                        + Adicionar usuário
+                    </button>
+                </div>
+
+                <div class="grid usuarios">
+                    <div class="grid-header">Usuário</div>
+                    <div class="grid-header">Tipo</div>
+                    <div class="grid-header">Empresa</div>
+                    <div class="grid-header">Ações</div>
+
+                    <th:block th:if="${usuarios.empty}">
+                        <div class="empty-grid">
+                            Nenhum usuário encontrado
+                        </div>
+                    </th:block>
+
+                    <th:block th:unless="${usuarios.empty}">
+                        <th:block th:each="usuario : ${usuarios.content}">
+                            <div th:text="${usuario.username}"></div>
+                            <div th:text="${usuario.role.descricao}"></div>
+                            <div th:text="${usuario.empresa?.razaoSocial}"></div>
+
+                            <div class="actions">
+                                <button
+                                        type="button"
+                                        class="btn small"
+                                        th:attr="
+                                            data-id=${usuario.id},
+                                            data-username=${usuario.username},
+                                            data-role=${usuario.role},
+                                            data-empresa=${usuario.empresa != null ? usuario.empresa.id : ''}"
+                                        onclick="abrirModalEditar(this)">
+                                    Editar
+                                </button>
+
+                                <form class="form-deletar" th:action="@{/admin/usuarios/deletar/{id}(id=${usuario.id})}" method="post">
+                                    <button type="submit" class="btn small danger">
+                                        Deletar
+                                    </button>
+                                </form>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <div class="pagination" th:if="${usuarios.totalPages > 1}">
+                    <a th:if="${usuarios.hasPrevious()}" th:href="@{/admin/usuarios(page=${usuarios.number - 1})}">
+                        Anterior
+                    </a>
+
+                    <span th:text="${usuarios.number + 1} + ' / ' + ${usuarios.totalPages}"></span>
+
+                    <a th:if="${usuarios.hasNext()}" th:href="@{/admin/usuarios(page=${usuarios.number + 1})}">
+                        Próxima
+                    </a>
+                </div>
+            </main>
+        </div>
+
+        <div th:replace="~{admin/usuarios/cadastrar :: cadastrar}"></div>
+        <div th:replace="~{admin/usuarios/editar :: editar}"></div>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script th:src="@{/js/admin/usuarios.js}"></script>
+    </body>
+</html>
