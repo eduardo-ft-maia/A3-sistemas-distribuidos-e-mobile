@@ -5,6 +5,7 @@
         <title>Home</title>
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/rodape.css}">
         <link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
 
@@ -47,5 +48,7 @@
                 </form>
             </div>
         </section>
+
+        <div th:replace="~{fragments/rodape :: rodape}"></div>
     </body>
 </html>

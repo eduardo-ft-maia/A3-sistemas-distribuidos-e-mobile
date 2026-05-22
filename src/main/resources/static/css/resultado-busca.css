@@ -130,3 +130,9 @@
     text-align: center;
     color: #9ca3af;
 }
+
+.info.chegada {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}

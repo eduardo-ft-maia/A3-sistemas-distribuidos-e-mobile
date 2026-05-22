@@ -6,6 +6,7 @@
 
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/rodape.css}">
         <link rel="stylesheet" th:href="@{/css/resultado-busca.css}">
     </head>
     <body>
@@ -39,7 +40,7 @@
                         <small>Direto</small>
                     </div>
 
-                    <div class="info">
+                    <div class="info chegada">
                         <strong th:text="${#temporals.format(viagem.horarioChegada, 'HH:mm')}"></strong>
                         <span th:text="${viagem.cidadeDestino.nome + ' - ' + viagem.cidadeDestino.estado.uf}"></span>
                     </div>
@@ -65,5 +66,7 @@
                 </a>
             </div>
         </div>
+
+        <div th:replace="~{fragments/rodape :: rodape}"></div>
     </body>
 </html>
