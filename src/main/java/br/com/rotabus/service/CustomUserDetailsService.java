@@ -92,6 +92,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             usuario.setEmpresa(null);
         }
 
+        usuario.setPassword("{noop}" + usuario.getPassword());
+
         usuarioRepository.save(usuario);
     }
 
@@ -108,7 +110,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         if (dadosUsuario.getPassword() != null && !dadosUsuario.getPassword().isBlank()) {
-            usuario.setPassword(dadosUsuario.getPassword());
+            usuario.setPassword("{noop}" + dadosUsuario.getPassword());
         }
 
         usuarioRepository.save(usuario);
