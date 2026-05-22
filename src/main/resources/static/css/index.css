@@ -1,6 +1,6 @@
 .hero {
     flex: 1;
-    background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url("/img/onibus.jpg");
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url("/img/onibus.jpg");
     background-size: cover;
     background-position: center;
     color: white;
@@ -10,9 +10,13 @@
 .hero-content {
     max-width: 1120px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .hero h1 {
-    max-width: 760px;
+    max-width: 900px;
+    text-align: center;
     font-size: 42px;
     line-height: 1.2;
     font-weight: 800;
@@ -25,8 +29,9 @@
 .hero p {
     font-size: 18px;
     color: #e5e7eb;
-    margin: 0 0 115px 0;
+    margin: 10px 0 115px 0;
     text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+    text-align: center;
 }
 .busca-form {
     width: 100%;
@@ -39,6 +44,7 @@
     border-radius: 10px;
     box-sizing: border-box;
     backdrop-filter: blur(4px);
+    border: 1px solid #1d2b3a;
 }
 .campo {
     display: flex;
