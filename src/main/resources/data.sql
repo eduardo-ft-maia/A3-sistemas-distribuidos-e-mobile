@@ -180,3 +180,33 @@ INSERT INTO viagem (empresa_id, cidade_origem_id, cidade_destino_id, horario_sai
       806.0,
       CURRENT_TIMESTAMP
     );
+
+-- Adicionar 100.000 viagens aleatórias nos próximos 7 dias
+INSERT INTO viagem (
+    empresa_id,
+    cidade_origem_id,
+    cidade_destino_id,
+    horario_saida,
+    horario_chegada,
+    valor_passagem,
+    distancia_km,
+    criado_em
+)
+SELECT
+    empresa_id,
+    origem_id,
+    destino_id,
+    DATEADD('HOUR', MOD(x, 168), CURRENT_TIMESTAMP),
+    DATEADD('HOUR', MOD(x, 168) + 3 + MOD(x, 10), CURRENT_TIMESTAMP),
+    50 + MOD(x * 13, 250),
+    100 + MOD(x * 41, 2000),
+    CURRENT_TIMESTAMP
+    FROM (
+        SELECT
+             x,
+            (SELECT id FROM empresa ORDER BY RAND() LIMIT 1) AS empresa_id,
+            (SELECT id FROM cidade ORDER BY RAND() LIMIT 1) AS origem_id,
+            (SELECT id FROM cidade ORDER BY RAND() LIMIT 1) AS destino_id
+        FROM SYSTEM_RANGE(1, 100000)
+    ) v
+    WHERE origem_id <> destino_id;
