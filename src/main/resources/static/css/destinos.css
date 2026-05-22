@@ -1,0 +1,43 @@
+.destinos-container {
+    padding: 50px 40px;
+    color: white;
+}
+
+.destinos-container h1 {
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+.estado-card {
+    background: #111827;
+    padding: 24px 28px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.estado-card h2 {
+    font-size: 34px;
+    margin-bottom: 14px;
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+.estado-card p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #f1f5f9;
+}
+
+@media (max-width: 900px) {
+    .destinos-container {
+        padding: 30px 16px;
+    }
+
+    .estado-card h2 {
+        font-size: 28px;
+    }
+
+    .estado-card p {
+        font-size: 16px;
+    }
+}

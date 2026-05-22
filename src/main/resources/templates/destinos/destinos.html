@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>RotaBus - Destinos</title>
+        <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/rodape.css}">
+        <link rel="stylesheet" th:href="@{/css/destinos.css}">
+    </head>
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
+
+        <div class="destinos-container">
+            <h1>Confira todos os destinos</h1>
+
+            <div class="estado-card" th:each="estado : ${estados}">
+                <h2 th:text="${estado.nome}"></h2>
+
+                <p th:if="${#lists.isEmpty(estado.cidades)}">
+                    Nenhum destino disponível.
+                </p>
+
+                <p th:unless="${#lists.isEmpty(estado.cidades)}">
+            <span th:each="cidade, iter : ${estado.cidades}">
+                <span th:text="${cidade.nome}"></span><span th:if="${!iter.last}"> · </span>
+            </span>
+                </p>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/rodape :: rodape}"></div>
+    </body>
+</html>

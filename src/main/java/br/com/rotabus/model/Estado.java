@@ -1,10 +1,8 @@
 package br.com.rotabus.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Estado {
@@ -17,6 +15,9 @@ public class Estado {
 
     @Column(nullable = false, length = 2, unique = true)
     private String uf;
+
+    @OneToMany(mappedBy = "estado")
+    private List<Cidade> cidades;
 
     public Long getId() {
         return id;
@@ -40,5 +41,13 @@ public class Estado {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public List<Cidade> getCidades() {
+        return cidades;
+    }
+
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 }
