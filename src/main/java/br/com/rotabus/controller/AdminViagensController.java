@@ -1,8 +1,12 @@
 package br.com.rotabus.controller;
 
+import br.com.rotabus.model.Viagem;
 import br.com.rotabus.service.CidadeService;
 import br.com.rotabus.service.CustomUserDetailsService;
 import br.com.rotabus.service.ViagemService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +34,17 @@ public class AdminViagensController {
     }
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("viagens", viagemService.listarViagensEmpresa());
+    public String listar(
+            Model model,
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        Pageable pageable = PageRequest.of(page, 10);
 
+        Page<Viagem> viagens = viagemService.listarViagensEmpresa(pageable);
+
+        model.addAttribute("viagens", viagens);
         model.addAttribute("cidades", cidadeService.listar());
-
         model.addAttribute("paginaAtiva", "viagens");
-
         model.addAttribute("adminGeral", usuarioService.usuarioLogadoEhAdmin());
 
         return "admin/viagens/listar";

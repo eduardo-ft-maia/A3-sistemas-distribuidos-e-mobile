@@ -105,3 +105,28 @@
         text-align: left;
     }
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+    align-items: center;
+}
+
+.pagination a {
+    color: white;
+    text-decoration: none;
+    background: #2563eb;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+.empty-results {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    color: #9ca3af;
+}

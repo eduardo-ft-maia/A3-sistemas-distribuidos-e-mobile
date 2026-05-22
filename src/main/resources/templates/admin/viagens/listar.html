@@ -40,14 +40,14 @@
                     <div class="grid-header">Criado em</div>
                     <div class="grid-header" th:text="${adminGeral} ? 'Empresa' : 'Ações'"></div>
 
-                    <th:block th:if="${#lists.isEmpty(viagens)}">
+                    <th:block th:if="${viagens.empty}">
                         <div class="empty-grid">
                             Nenhuma viagem encontrada
                         </div>
                     </th:block>
 
-                    <th:block th:unless="${#lists.isEmpty(viagens)}">
-                        <th:block th:each="viagem : ${viagens}">
+                    <th:block th:unless="${viagens.empty}">
+                        <th:block th:each="viagem : ${viagens.content}">
                             <div th:text="${viagem.cidadeOrigem.nome}"></div>
                             <div th:text="${viagem.cidadeDestino.nome}"></div>
                             <div th:text="${#temporals.format(viagem.horarioSaida, 'dd/MM/yyyy - HH:mm')}"></div>
@@ -82,6 +82,18 @@
                             </div>
                         </th:block>
                     </th:block>
+                </div>
+
+                <div class="pagination" th:if="${viagens.totalPages > 1}">
+                    <a th:if="${viagens.hasPrevious()}" th:href="@{/admin/viagens(page=${viagens.number - 1})}">
+                        Anterior
+                    </a>
+
+                    <span th:text="${viagens.number + 1} + ' / ' + ${viagens.totalPages}"></span>
+
+                    <a th:if="${viagens.hasNext()}" th:href="@{/admin/viagens(page=${viagens.number + 1})}">
+                        Próxima
+                    </a>
                 </div>
 
             </main>

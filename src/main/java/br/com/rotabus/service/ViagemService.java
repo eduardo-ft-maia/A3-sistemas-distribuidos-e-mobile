@@ -7,6 +7,8 @@ import br.com.rotabus.repository.UsuarioRepository;
 import br.com.rotabus.repository.ViagemRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -36,14 +38,14 @@ public class ViagemService {
         return viagemRepository.findById(id).orElseThrow();
     }
 
-    public List<Viagem> listarViagensEmpresa() {
+    public Page<Viagem> listarViagensEmpresa(Pageable pageable) {
         Usuario usuario = usuarioService.usuarioLogado();
 
         if (usuarioService.usuarioLogadoEhAdmin()) {
-            return viagemRepository.findAll();
+            return viagemRepository.findAll(pageable);
         }
 
-        return viagemRepository.findByEmpresa(usuario.getEmpresa());
+        return viagemRepository.findByEmpresa(usuario.getEmpresa(), pageable);
     }
 
     public void cadastrar(
@@ -97,7 +99,13 @@ public class ViagemService {
         viagemRepository.deleteById(id);
     }
 
-    public List<Viagem> buscar(String origem, String destino, LocalDate data, LocalTime horario) {
+    public Page<Viagem> buscar(
+            String origem,
+            String destino,
+            LocalDate data,
+            LocalTime horario,
+            Pageable pageable
+    ) {
         LocalDateTime inicioBusca = LocalDateTime.of(data, horario);
         LocalDateTime fimDia = data.atTime(23, 59, 59);
 
@@ -105,7 +113,8 @@ public class ViagemService {
                 origem,
                 destino,
                 inicioBusca,
-                fimDia
+                fimDia,
+                pageable
         );
     }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Resultado da Busca</title>
+
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/menu.css}">
+        <link rel="stylesheet" th:href="@{/css/resultado-busca.css}">
+    </head>
+    <body>
+        <div th:replace="~{fragments/menu :: menu}"></div>
+
+        <div class="container">
+            <h1>Resultado da busca</h1>
+
+            <div class="empty-results" th:if="${viagens.empty}">
+                Nenhuma viagem encontrada para os filtros informados.
+            </div>
+
+            <th:block th:unless="${viagens.empty}">
+                <div class="resultado-card" th:each="viagem : ${viagens.content}">
+                    <div class="empresa">
+                        <div class="logo-empresa">R</div>
+
+                        <div>
+                            <strong th:text="${viagem.empresa.razaoSocial}"></strong>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <strong th:text="${#temporals.format(viagem.horarioSaida, 'HH:mm')}"></strong>
+                        <span th:text="${viagem.cidadeOrigem.nome + ' - ' + viagem.cidadeOrigem.estado.uf}"></span>
+                    </div>
+
+                    <div class="trajeto">
+                        <span th:text="${#temporals.format(viagem.horarioSaida, 'HH:mm') + ' - ' + #temporals.format(viagem.horarioChegada, 'HH:mm')}"></span>
+                        <div></div>
+                        <small>Direto</small>
+                    </div>
+
+                    <div class="info">
+                        <strong th:text="${#temporals.format(viagem.horarioChegada, 'HH:mm')}"></strong>
+                        <span th:text="${viagem.cidadeDestino.nome + ' - ' + viagem.cidadeDestino.estado.uf}"></span>
+                    </div>
+
+                    <div class="preco">
+                        <strong th:text="${'R$ ' + viagem.valorPassagem}"></strong>
+                        <span>por pessoa</span>
+                    </div>
+                </div>
+            </th:block>
+
+            <div class="pagination" th:if="${viagens.totalPages > 1}">
+                <a th:if="${viagens.hasPrevious()}"
+                   th:href="@{/viagens/buscar(origem=${origem}, destino=${destino}, data=${data}, horario=${horario}, page=${viagens.number - 1})}">
+                    Anterior
+                </a>
+
+                <span th:text="${viagens.number + 1} + ' / ' + ${viagens.totalPages}"></span>
+
+                <a th:if="${viagens.hasNext()}"
+                   th:href="@{/viagens/buscar(origem=${origem}, destino=${destino}, data=${data}, horario=${horario}, page=${viagens.number + 1})}">
+                    Próxima
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
