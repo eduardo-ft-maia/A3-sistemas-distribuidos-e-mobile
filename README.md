@@ -33,7 +33,7 @@ Senha: 123
 ```
 7. Login teste de empresa
 ```text
-Usuário: empresa
+Usuário: empresa1
 Senha: 123
 ```
 8. Acesso ao banco H2
