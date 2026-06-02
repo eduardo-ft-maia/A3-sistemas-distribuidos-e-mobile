@@ -54,4 +54,4 @@ jdbc:h2:mem:rotabusdb
 - André Henrique de Oliveira
 - Graziele dos Santos Rodrigues
 - Pedro Pilla Soares
-Isaias Gomes Dally Junior
+- Isaias Gomes Dally Junior
